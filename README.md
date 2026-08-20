@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Phos Design Workspace — Website
 
-## Getting Started
+Portfolio website for **Phos Design Workspace**, a multidisciplinary architecture & interior design firm in Kolhapur, Maharashtra. Built with Next.js 15 (App Router), Tailwind CSS v4, Motion (Framer Motion) and Lenis smooth scrolling.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm start        # serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contact form setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The contact form posts to `/api/contact`, which forwards enquiries to **phosworkspace@gmail.com** via [Web3Forms](https://web3forms.com) (free).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Go to web3forms.com and create an access key using `phosworkspace@gmail.com`.
+2. Copy `.env.example` to `.env.local` and paste the key:
+   ```
+   WEB3FORMS_ACCESS_KEY=your-key-here
+   ```
+3. Restart the dev server / redeploy.
 
-## Learn More
+Until the key is set, the form shows a graceful fallback pointing visitors to email/phone.
 
-To learn more about Next.js, take a look at the following resources:
+## Editing content
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All site copy lives in two typed data files — no component changes needed:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/data/site.ts` — contact details, services, team, stats, memberships
+- `src/data/projects.ts` — every project: facts, briefs, sector, images, featured flags
 
-## Deploy on Vercel
+Project photos live in `public/images/projects/<slug>/01.jpg, 02.jpg, …`. To add a photo, drop it in the project's folder with the next number and bump the image count for that project in `projects.ts`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is static-first and deploys anywhere Next.js runs — [Vercel](https://vercel.com) is the zero-config option (import the repo, add the `WEB3FORMS_ACCESS_KEY` env var, deploy). Point the `phosdesignworkspace.in` domain at the deployment when ready.
+
+## Structure
+
+```
+src/
+  app/            pages (/, /projects, /projects/[slug], /about, /services, /contact)
+  components/     shared UI (header, footer, reveal animations, lightbox, …)
+  data/           all editable content
+public/images/    curated photography from the firm's profile deck
+```

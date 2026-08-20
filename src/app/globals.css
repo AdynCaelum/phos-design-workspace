@@ -1,26 +1,218 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Exact Branding Palette from Brand Swatches */
+  /* AREIA: #D3C7AD | RGB(211, 199, 173) | CMYK(0, 6, 18, 17) */
+  --areia: #D3C7AD;
+  --areia-light: #E7DDCC;
+  --areia-muted: #BDB094;
+  --areia-dark: #9E9175;
+
+  /* VERDE OPACO (Primary Surface): #6B6751 | RGB(107, 103, 81) | CMYK(0, 4, 24, 58) */
+  --verde: #6B6751;
+  --verde-dark: #191B16;
+  --verde-deep: #121410;
+  --verde-surface: #262920;
+  --verde-light: #878267;
+  --verde-muted: #A39E82;
+
+  /* AZUL (Accent / Detail): #28374A | RGB(40, 55, 74) | CMYK(46, 26, 0, 71) */
+  --azul: #28374A;
+  --azul-dark: #16202C;
+  --azul-deep: #101821;
+  --azul-surface: #202D3D;
+  --azul-light: #3D516B;
+
+  /* TERRA QUEIMADA: #754437 | RGB(117, 68, 55) | CMYK(0, 42, 53, 54) */
+  --terra: #754437;
+  --terra-light: #945747;
+  --terra-muted: #B37160;
+  --terra-dark: #4F2C23;
+
+  /* Luxury Base Canvas: Verde Opaco Olive-Slate Foundation */
+  --ground-dark: #121410;
+  --ground-base: #191B16;
+  --ground-surface: #262920;
+  
+  --light-cream: #FAF7F2;
+  --light-cream-dim: #EAE3D5;
+  --light-cream-muted: #D3C7AD;
+
+  /* Backward compatibility aliases */
+  --ivory: var(--light-cream);
+  --charcoal: var(--ground-dark);
+  --sage: var(--verde);
+  --sage-deep: var(--ground-base);
+  --sage-dim: var(--ground-dark);
+  --sage-mid: var(--verde-surface);
+  --sage-light: var(--areia);
+  --gold: var(--areia);
+  --gold-light: var(--areia-light);
+  --deep-green: var(--ground-base);
+  --deep-green-dark: var(--ground-dark);
+  --deep-green-surface: var(--ground-surface);
+  --moderate-green: var(--verde);
+  --laurel-green: var(--areia-muted);
+  --tuscan-gold: var(--areia);
+  --tuscan-gold-light: var(--areia-light);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-areia: #D3C7AD;
+  --color-areia-light: #E7DDCC;
+  --color-areia-muted: #BDB094;
+  --color-areia-dark: #9E9175;
+  
+  --color-verde: #6B6751;
+  --color-verde-dark: #191B16;
+  --color-verde-deep: #121410;
+  --color-verde-surface: #262920;
+  --color-verde-light: #878267;
+  --color-verde-muted: #A39E82;
+
+  --color-azul: #28374A;
+  --color-azul-dark: #16202C;
+  --color-azul-deep: #101821;
+  --color-azul-surface: #202D3D;
+  --color-azul-light: #3D516B;
+
+  --color-terra: #754437;
+  --color-terra-light: #945747;
+  --color-terra-muted: #B37160;
+  --color-terra-dark: #4F2C23;
+
+  --color-ground-dark: #121410;
+  --color-ground-base: #191B16;
+  --color-ground-surface: #262920;
+
+  --color-light-cream: #FAF7F2;
+  --color-light-cream-dim: #EAE3D5;
+  --color-light-cream-muted: #D3C7AD;
+
+  /* Legacy color aliases */
+  --color-deep-green: #191B16;
+  --color-deep-green-dark: #121410;
+  --color-deep-green-surface: #262920;
+  --color-moderate-green: #6B6751;
+  --color-laurel-green: #BDB094;
+  --color-tuscan-gold: #D3C7AD;
+  --color-tuscan-gold-light: #E7DDCC;
+  --color-ivory: #FAF7F2;
+  --color-charcoal: #121410;
+  --color-sage: #6B6751;
+  --color-sage-deep: #191B16;
+  --color-gold: #D3C7AD;
+  --color-gold-light: #E7DDCC;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ground-base);
+  color: var(--light-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--areia);
+  color: var(--ground-dark);
+}
+
+/* Lenis recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Editorial eyebrow label */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--areia);
+}
+
+/* Hairline rules with Areia & Terracotta glow */
+.rule-sage {
+  height: 1px;
+  background: linear-gradient(to right, var(--areia), rgba(211, 199, 173, 0.2), transparent);
+}
+
+.rule-terra {
+  height: 1px;
+  background: linear-gradient(to right, var(--terra-light), rgba(117, 68, 55, 0.2), transparent);
+}
+
+/* Glassmorphism surfaces with Verde Opaco and Areia Travertine */
+.glass-panel {
+  background: rgba(38, 41, 32, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(211, 199, 173, 0.22);
+  box-shadow: 0 20px 48px -10px rgba(10, 12, 8, 0.75), inset 0 1px 1px 0 rgba(250, 247, 242, 0.18);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(107, 103, 81, 0.45) 0%, rgba(22, 24, 19, 0.9) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(211, 199, 173, 0.24);
+  box-shadow: 0 24px 60px -12px rgba(10, 12, 8, 0.8), inset 0 1px 1px 0 rgba(250, 247, 242, 0.22);
+}
+
+.glass-input {
+  background: rgba(22, 24, 19, 0.85);
+  border: 1px solid rgba(211, 199, 173, 0.25);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-input:focus {
+  border-color: var(--areia);
+  background: rgba(38, 41, 32, 0.95);
+  box-shadow: 0 0 0 3px rgba(211, 199, 173, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Layered Shadow Utilities */
+.shadow-elevated {
+  box-shadow: 0 12px 32px -4px rgba(10, 12, 8, 0.7), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-dramatic {
+  box-shadow: 0 28px 65px -12px rgba(8, 10, 6, 0.9), 0 8px 24px -4px rgba(10, 12, 8, 0.55);
+}
+
+.shadow-glow-areia {
+  box-shadow: 0 0 35px -5px rgba(211, 199, 173, 0.4);
+}
+
+.shadow-glow-terra {
+  box-shadow: 0 0 35px -5px rgba(117, 68, 55, 0.45);
+}
+
+.shadow-glow-gold {
+  box-shadow: 0 0 35px -5px rgba(211, 199, 173, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
