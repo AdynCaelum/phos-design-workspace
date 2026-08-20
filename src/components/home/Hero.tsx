@@ -51,18 +51,25 @@ const HERO_SLIDES = [
     code: "DWG: 06-JEWEL",
   },
   {
+    image: "/images/projects/Manali_Beauty_parlor/beauty.jpeg",
+    title: "Manali Beauty Parlor",
+    sector: "Commercial Salon",
+    location: "Kolhapur",
+    code: "DWG: 07-SALON",
+  },
+  {
     image: "/images/projects/santulan-kendra/01.jpg",
     title: "Santulan Kendra Healthcare",
     sector: "Healthcare",
     location: "Kolhapur",
-    code: "DWG: 07-HEALTH",
+    code: "DWG: 08-HEALTH",
   },
   {
     image: "/images/projects/vengurlekar-residence/01.jpg",
     title: "Vengurlekar Konkan Villa",
     sector: "Residential Bungalow",
     location: "Kudal",
-    code: "DWG: 08-BUNGALOW",
+    code: "DWG: 09-BUNGALOW",
   },
 ];
 

@@ -99,6 +99,22 @@ export const projects: Project[] = [
     caseStudy: true,
   },
   {
+    slug: "manali-beauty-parlor",
+    title: "Manali Beauty Parlor",
+    sector: "Commercial",
+    location: "Kolhapur",
+    scope: "Salon Interior Planning & Execution",
+    brief:
+      "A boutique beauty parlor and styling salon designed with elegant vanity mirrors, warm ambient illumination, ergonomic treatment stations and comfortable client seating. The interior balances privacy for specialized treatments with an inviting, light-filled reception and styling studio.",
+    services: ["Interior Design", "Lighting Design", "Custom Millwork", "Site Execution"],
+    images: [
+      "/images/projects/Manali_Beauty_parlor/beauty.jpeg",
+      "/images/projects/Manali_Beauty_parlor/beauty_2.jpeg",
+    ],
+    featured: true,
+    caseStudy: true,
+  },
+  {
     slug: "santulan-kendra",
     title: "Santulan Kendra – Balaji Tambe",
     sector: "Healthcare",
