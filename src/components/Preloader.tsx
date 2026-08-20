@@ -22,7 +22,7 @@ export default function Preloader() {
       {show && (
         <motion.div
           exit={{ y: "-100%", transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] } }}
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-deep-green-dark"
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-ground-dark"
           aria-hidden
         >
           <div className="overflow-hidden">
@@ -32,14 +32,14 @@ export default function Preloader() {
               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="font-serif text-6xl font-medium lowercase text-light-cream md:text-7xl"
             >
-              pho<span className="text-tuscan-gold">s</span>
+              pho<span className="text-areia">s</span>
             </motion.p>
           </div>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="absolute mt-24 text-[0.6rem] font-semibold uppercase tracking-[0.4em] text-laurel-green"
+            className="absolute mt-24 text-[0.6rem] font-semibold uppercase tracking-[0.4em] text-areia-muted"
           >
             design workspace
           </motion.p>

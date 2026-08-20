@@ -91,7 +91,7 @@ export const process = [
 ];
 
 export const stats = [
-  { value: 50, suffix: "+", label: "Projects Delivered" },
+  { value: 200, suffix: "+", label: "Projects Delivered" },
   { value: 7, suffix: "", label: "Sectors Served" },
   { value: 9, suffix: "", label: "Bank Branches Designed" },
   { value: 19, suffix: "+", label: "Years of Leadership Experience" },
