@@ -27,8 +27,8 @@ export default function FeaturedProjects() {
             <div>
               <div className="flex items-center gap-3">
                 <SectionLabel>Selected Work</SectionLabel>
-                <span className="rounded bg-terra/25 border border-terra/40 px-2.5 py-0.5 text-[0.65rem] font-mono text-terra-light">
-                  DWG 02 / RESIDENTIAL & COMMERCIAL
+                <span className="text-xs uppercase tracking-[0.2em] text-terra-light font-medium">
+                  Residential &amp; Commercial
                 </span>
               </div>
               <h2 className="mt-4 font-serif text-4xl font-medium text-light-cream md:text-6xl">

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "motion/react";
 import ArchitecturalSketchBg from "@/components/ArchitecturalSketchBg";
+import { scrollToTarget } from "@/components/SmoothScroll";
 
 const HEADLINE = ["Spaces", "designed", "to", "stand", "the", "test", "of", "time."];
 
@@ -77,7 +78,20 @@ const SLIDE_DURATION = 4200; // 4.2 seconds per slide in continuous auto-loop
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
+
+  // Multi-plane parallax scrolling transforms linked to Lenis
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const sketchY = useTransform(scrollYProgress, [0, 1], ["0%", "-16%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   // Continuous auto-loop without any manual button requirements
   useEffect(() => {
@@ -90,10 +104,20 @@ export default function Hero() {
 
   const activeSlide = HERO_SLIDES[currentSlide];
 
+  const handleScrollDown = () => {
+    scrollToTarget("#studio-intro", { duration: 1.4 });
+  };
+
   return (
-    <section className="relative flex h-svh min-h-[600px] items-end overflow-hidden bg-ground-dark">
-      {/* Background Photography Slideshow — Continuous Auto-Looping Crossfade with Ken Burns Zoom */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section
+      ref={containerRef}
+      className="relative flex h-svh min-h-[600px] items-end overflow-hidden bg-ground-dark"
+    >
+      {/* Background Photography Slideshow — Continuous Auto-Looping Crossfade with Ken Burns Zoom & Parallax */}
+      <motion.div
+        style={reduced ? undefined : { y: backgroundY, scale: backgroundScale }}
+        className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform"
+      >
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={currentSlide}
@@ -113,7 +137,7 @@ export default function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-      </div>
+      </motion.div>
 
       {/* Multi-layered Scrim: blends photo into the Deep Olive Ground Canvas */}
       <div
@@ -121,8 +145,13 @@ export default function Hero() {
         aria-hidden
       />
 
-      {/* Prominent Architectural Bungalow & Villa Vector Line-Art Sketch Overlay */}
-      <ArchitecturalSketchBg variant="bungalow" opacity={0.36} />
+      {/* Prominent Architectural Bungalow & Villa Vector Line-Art Sketch Overlay with Parallax */}
+      <motion.div
+        style={reduced ? undefined : { y: sketchY }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <ArchitecturalSketchBg variant="bungalow" opacity={0.36} />
+      </motion.div>
 
       {/* Warm Areia Ambient Glow Bloom: RGB(211, 199, 173) */}
       <motion.div
@@ -142,35 +171,41 @@ export default function Hero() {
         aria-hidden
       />
 
-      {/* Minimal Architectural Live Reel Ticker (Top Right — Automatic, Non-interactive) */}
-      <div className="absolute top-24 right-6 lg:top-28 lg:right-10 z-20 hidden sm:flex flex-col items-end gap-2 pointer-events-none select-none">
+      {/* Editorial Monograph Index & Caption (Top Right) */}
+      <div className="absolute top-24 right-6 lg:top-28 lg:right-12 z-20 hidden sm:block select-none text-right pointer-events-none">
         <motion.div
           key={activeSlide.title}
-          initial={{ opacity: 0, y: -6 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 rounded-full border border-areia/25 bg-ground-dark/75 backdrop-blur-xl px-4 py-2 shadow-elevated"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-end"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-areia animate-pulse" />
-          <div className="flex items-center gap-2 text-xs">
-            <span className="font-mono text-[0.68rem] text-terra-light font-semibold">
-              {String(currentSlide + 1).padStart(2, "0")}/{String(HERO_SLIDES.length).padStart(2, "0")}
+          <div className="flex items-center gap-2 font-mono text-[11px] text-areia/80">
+            <span className="font-semibold text-terra-light">
+              {String(currentSlide + 1).padStart(2, "0")}
             </span>
-            <span className="h-3 w-px bg-areia/25" />
-            <span className="font-serif text-light-cream text-sm">{activeSlide.title}</span>
-            <span className="text-[0.62rem] uppercase tracking-[0.16em] text-areia-muted">({activeSlide.sector})</span>
+            <span className="text-light-cream/25">/</span>
+            <span>{String(HERO_SLIDES.length).padStart(2, "0")}</span>
           </div>
+
+          <p className="mt-1 font-serif text-lg text-light-cream tracking-wide">
+            {activeSlide.title}
+          </p>
+
+          <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-areia-muted">
+            {activeSlide.sector} · {activeSlide.location}
+          </p>
         </motion.div>
 
-        {/* Continuous auto-loop progress indicator lines */}
-        <div className="flex items-center gap-1.5 pr-2">
+        {/* Minimal Progress Rule */}
+        <div className="mt-3 flex items-center justify-end gap-1.5">
           {HERO_SLIDES.map((slide, idx) => {
             const isActive = idx === currentSlide;
             return (
-              <div
+              <span
                 key={slide.title}
-                className={`h-1 transition-all duration-500 rounded-full ${
-                  isActive ? "w-7 bg-areia shadow-glow-areia" : "w-2 bg-areia/25"
+                className={`block h-[2px] transition-all duration-500 rounded-full ${
+                  isActive ? "w-6 bg-areia" : "w-2 bg-areia/25"
                 }`}
               />
             );
@@ -178,21 +213,25 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Main Hero Content */}
-      <div className="relative mx-auto w-full max-w-7xl px-6 pb-24 lg:px-10 z-10">
-        {/* Dynamic Eyebrow with Active Project Code */}
+      {/* Main Hero Content with Scroll-Linked Parallax */}
+      <motion.div
+        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="relative mx-auto w-full max-w-7xl px-6 pb-24 lg:px-10 z-10 will-change-transform"
+      >
+        {/* Human Editorial Studio Dateline */}
         <motion.div
-          initial={reduced ? false : { opacity: 0, y: 16 }}
+          initial={reduced ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-areia/40 bg-ground-dark/85 backdrop-blur-xl shadow-elevated"
+          className="flex flex-wrap items-center gap-3 text-xs tracking-[0.22em] uppercase font-sans select-none"
         >
-          <span className="h-2 w-2 rounded-full bg-terra-light animate-pulse" />
-          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-areia">
-            Architecture &amp; Interior Design — Kolhapur
+          <span className="h-px w-8 bg-areia/50 sm:w-12" aria-hidden />
+          <span className="font-semibold text-areia">
+            Architecture &amp; Interior Design
           </span>
-          <span className="hidden sm:inline-block font-mono text-[0.65rem] text-areia-muted border-l border-areia/30 pl-2.5">
-            {activeSlide.code}
+          <span className="text-light-cream/30">·</span>
+          <span className="text-light-cream/70 font-normal">
+            Kolhapur, Maharashtra
           </span>
         </motion.div>
 
@@ -226,35 +265,37 @@ export default function Hero() {
           </div>
 
           {/* Mobile slide indicator (Automatic) */}
-          <div className="flex sm:hidden items-center gap-2 rounded-full border border-areia/30 bg-ground-dark/80 px-3.5 py-1.5 text-xs text-areia">
-            <span className="font-mono text-[0.68rem] text-terra-light">
+          <div className="flex sm:hidden items-center gap-2 text-xs text-areia select-none">
+            <span className="font-mono text-[0.72rem] text-terra-light font-semibold">
               {String(currentSlide + 1).padStart(2, "0")} / {String(HERO_SLIDES.length).padStart(2, "0")}
             </span>
-            <span>·</span>
-            <span className="truncate max-w-[140px] text-[0.72rem] text-light-cream">{activeSlide.title}</span>
+            <span className="text-light-cream/40">·</span>
+            <span className="truncate max-w-[160px] font-serif text-sm text-light-cream">{activeSlide.title}</span>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
-      {/* Scroll indicator on bottom right */}
-      <motion.div
+      {/* Smooth Scroll-down trigger button on bottom right */}
+      <motion.button
+        type="button"
+        onClick={handleScrollDown}
         initial={reduced ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 right-8 hidden md:block lg:right-12 z-10"
-        aria-hidden
+        className="absolute bottom-8 right-8 hidden md:block lg:right-12 z-20 cursor-pointer group focus:outline-none"
+        aria-label="Scroll to Studio Introduction"
       >
         <motion.div
           animate={reduced ? undefined : { y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
           className="flex flex-col items-center gap-3"
         >
-          <span className="text-[0.62rem] font-semibold uppercase tracking-[0.3em] text-areia [writing-mode:vertical-lr]">
+          <span className="text-[0.62rem] font-semibold uppercase tracking-[0.3em] text-areia [writing-mode:vertical-lr] group-hover:text-light-cream transition-colors">
             Scroll
           </span>
-          <span className="h-10 w-px bg-gradient-to-b from-areia to-transparent" />
+          <span className="h-10 w-px bg-gradient-to-b from-areia via-terra-light to-transparent group-hover:h-12 transition-all" />
         </motion.div>
-      </motion.div>
+      </motion.button>
     </section>
   );
 }

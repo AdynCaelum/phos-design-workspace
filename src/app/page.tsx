@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Hero from "@/components/home/Hero";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
+import HorizontalProjectsScroll from "@/components/home/HorizontalProjectsScroll";
+import BlueprintCompare from "@/components/home/BlueprintCompare";
+import ArchitecturalTicker from "@/components/home/ArchitecturalTicker";
 import Preloader from "@/components/Preloader";
 import Reveal from "@/components/Reveal";
 import SectionLabel from "@/components/SectionLabel";
@@ -14,9 +17,10 @@ export default function Home() {
     <>
       <Preloader />
       <Hero />
+      <ArchitecturalTicker />
 
       {/* Intro / The Studio */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-ground-dark via-ground-base to-ground-dark py-24 lg:py-36">
+      <section id="studio-intro" className="relative overflow-hidden bg-gradient-to-b from-ground-dark via-ground-base to-ground-dark py-24 lg:py-36">
         {/* Prominent Architectural Bungalow Sketch */}
         <ArchitecturalSketchBg variant="bungalow" opacity={0.32} />
         
@@ -36,7 +40,7 @@ export default function Home() {
               <div className="flex flex-col gap-4">
                 <SectionLabel>The Studio</SectionLabel>
                 <div className="mt-2 rounded-xl border border-areia/25 bg-ground-surface/70 p-4 backdrop-blur-md">
-                  <p className="font-mono text-xs text-terra-light uppercase tracking-wider">DWG: 03 / STUDIO</p>
+                  <p className="text-[11px] font-semibold text-terra-light uppercase tracking-[0.2em]">Architecture Practice</p>
                   <p className="mt-1 font-serif text-lg text-light-cream">Phos Design Workspace</p>
                   <p className="mt-1 text-xs text-areia-muted">Kolhapur, Maharashtra · Est. 2024</p>
                 </div>
@@ -72,6 +76,12 @@ export default function Home() {
 
       <FeaturedProjects />
 
+      {/* Cinema-Grade Horizontal Filmstrip Archive driven by Lenis Scroll */}
+      <HorizontalProjectsScroll />
+
+      {/* Interactive CAD Working Drawing vs Built Reality Slider */}
+      <BlueprintCompare />
+
       {/* Services strip */}
       <section className="relative overflow-hidden bg-gradient-to-b from-ground-dark via-verde-surface/60 to-ground-dark text-light-cream py-24 lg:py-32">
         <ArchitecturalSketchBg variant="process" opacity={0.28} />
@@ -84,8 +94,8 @@ export default function Home() {
           <Reveal>
             <div className="flex items-center gap-3">
               <SectionLabel light>What We Do</SectionLabel>
-              <span className="rounded bg-areia/15 border border-areia/30 px-2.5 py-0.5 font-mono text-[0.65rem] text-areia">
-                DISCIPLINE SPEC
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-areia/80">
+                Core Disciplines
               </span>
             </div>
             <h2 className="mt-4 max-w-xl font-serif text-4xl font-medium text-light-cream md:text-5xl">
