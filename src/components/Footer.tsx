@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SectionLabel from "./SectionLabel";
 import ArchitecturalSketchBg from "./ArchitecturalSketchBg";
-import { site, services } from "@/data/site";
+import { site } from "@/data/site";
 import { sectors } from "@/data/projects";
 
 const footerNav = [

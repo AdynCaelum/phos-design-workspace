@@ -4,8 +4,25 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Compass, Layers } from "lucide-react";
 import DimensionGuide from "@/components/drafting/DimensionGuide";
+
+function CompassIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+    </svg>
+  );
+}
+
+function ArrowUpRightIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M7 7h10v10" />
+      <path d="M7 17 17 7" />
+    </svg>
+  );
+}
 
 const SHOWCASE_ITEMS = [
   {
@@ -105,7 +122,7 @@ export default function HorizontalProjectsScroll() {
           </div>
 
           <div className="flex items-center gap-2 text-areia-muted text-xs">
-            <Compass className="h-3.5 w-3.5 text-terra-light" />
+            <CompassIcon className="h-3.5 w-3.5 text-terra-light" />
             <span className="tracking-wider uppercase text-[10px]">Scroll horizontally</span>
           </div>
         </div>
@@ -199,7 +216,7 @@ export default function HorizontalProjectsScroll() {
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-areia/30 bg-ground-dark/80 text-areia transition-all duration-300 group-hover:bg-areia group-hover:text-ground-dark group-hover:scale-110 shadow-elevated"
                   title="View full case study"
                 >
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowUpRightIcon className="h-5 w-5" />
                 </Link>
               </div>
             </article>

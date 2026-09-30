@@ -22,7 +22,6 @@ export default function ArchitecturalSketchBg({
   });
 
   const yDrift = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-  const yParallaxFast = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   return (
     <div

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import Logo from "./Logo";
 
 const links = [
   { href: "/", label: "Home" },
@@ -18,6 +17,11 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
   const reduced = useReducedMotion();
 
   useEffect(() => {
@@ -27,8 +31,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";

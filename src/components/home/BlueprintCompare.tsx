@@ -2,8 +2,23 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Sliders, Compass, Eye, CheckCircle2 } from "lucide-react";
 import DimensionGuide from "@/components/drafting/DimensionGuide";
+
+function SlidersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="4" x2="4" y1="21" y2="14" />
+      <line x1="4" x2="4" y1="10" y2="3" />
+      <line x1="12" x2="12" y1="21" y2="12" />
+      <line x1="12" x2="12" y1="8" y2="3" />
+      <line x1="20" x2="20" y1="21" y2="16" />
+      <line x1="20" x2="20" y1="12" y2="3" />
+      <line x1="1" x2="7" y1="14" y2="14" />
+      <line x1="9" x2="15" y1="8" y2="8" />
+      <line x1="17" x2="23" y1="16" y2="16" />
+    </svg>
+  );
+}
 
 export default function BlueprintCompare() {
   const [sliderPos, setSliderPos] = useState<number>(50); // 50% split by default
@@ -63,7 +78,7 @@ export default function BlueprintCompare() {
           </div>
 
           <div className="flex items-center gap-2.5 text-xs text-areia/80">
-            <Sliders className="h-4 w-4 text-terra-light" />
+            <SlidersIcon className="h-4 w-4 text-terra-light" />
             <span className="tracking-wider uppercase text-[11px]">Drag to compare</span>
           </div>
         </div>

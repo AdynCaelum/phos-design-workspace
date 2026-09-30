@@ -12,9 +12,12 @@ export default function Preloader() {
     if (reduced) return;
     if (sessionStorage.getItem("phos-preloaded")) return;
     sessionStorage.setItem("phos-preloaded", "1");
-    setShow(true);
+    const frame = requestAnimationFrame(() => setShow(true));
     const t = setTimeout(() => setShow(false), 1900);
-    return () => clearTimeout(t);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(t);
+    };
   }, [reduced]);
 
   return (

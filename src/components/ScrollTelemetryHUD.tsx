@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
-import { ArrowUp, Compass } from "lucide-react";
+import { motion, useScroll } from "motion/react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
+function ArrowUpIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m5 12 7-7 7 7" />
+      <path d="M12 19V5" />
+    </svg>
+  );
+}
+
 export default function ScrollTelemetryHUD() {
-  const { scrollYProgress, scrollY } = useScroll();
+  const { scrollYProgress } = useScroll();
   const [elevation, setElevation] = useState(0);
   const [percent, setPercent] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -58,7 +66,7 @@ export default function ScrollTelemetryHUD() {
         title="Scroll to top"
       >
         <span className="text-[9px] uppercase tracking-wider text-areia-muted group-hover:text-areia">TOP</span>
-        <ArrowUp className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 text-areia" />
+        <ArrowUpIcon className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 text-areia" />
       </button>
     </motion.aside>
   );
